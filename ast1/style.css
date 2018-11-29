@@ -1,0 +1,21 @@
+#slider {
+  position: relative;
+  width: 500px;
+  height: 384px;
+  overflow: hidden;
+}
+
+#inner-slider {
+  position: absolute;
+  height: 384px;
+  width: 2500px;
+  float: left;
+}
+
+img.slider-image {
+  float: left;
+  width: 500px;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
