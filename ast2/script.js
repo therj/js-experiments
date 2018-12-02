@@ -1,9 +1,13 @@
 // circle  sizes!
-var MIN_SIZE = 20
-var MAX_SIZE = 30
+var MIN_SIZE = 30;
+var MAX_SIZE = 50;
 // Height width WITHOUT px!
-var containerWidth = 800;
-var containerHeight = 500
+var WIDTH = 800;
+var HEIGHT = 800;
+
+var container = document.getElementById('container');
+container.style.width = WIDTH + 'px';
+container.style.height = HEIGHT + 'px';
 
 function Ball(numberOfBalls) {
   var balls = []
@@ -66,36 +70,37 @@ function Ball(numberOfBalls) {
   }
 
   function checkBoundary(obj) {
-    if (obj.x <= 0 || (obj.x + obj.radius) >= containerWidth) return 'x'
-    else if (obj.y <= 0 || (obj.y + obj.radius) >= containerHeight) return 'y'
+    if (obj.x <= 0 || (obj.x + obj.radius) >= WIDTH) return 'x'
+    else if (obj.y <= 0 || (obj.y + obj.radius) >= HEIGHT) return 'y'
     return 'z';
   }
 
 
   function createOneBall() {
-    // var run = false;
-    // do {
-    var ball = {};
-    ball.div = document.createElement('div');
-    ball.radius = randomNumber(MIN_SIZE, MAX_SIZE);
-    ball.x = randomNumber(5, 645);
-    ball.y = randomNumber(5, 345);
-    run = checkCollision(ball, 0, balls.length - 1, -1);
-    // checkCollision on creation!
-    ball.vx = randomNumber(.2, 1);
-    ball.vy = randomNumber(.2, 1);
-    // Randomize individual velocity!
-    ball.dx = randomNumber(1, 10) % 2 ? 1 : -1;
-    ball.dy = randomNumber(1, 10) % 2 ? 1 : -1;
-    // console.log(ball.dx);
-    ball.div.style.position = 'absolute';
-    ball.div.style.left = ball.x + 'px';
-    ball.div.style.top = ball.y + 'px';
-    ball.div.style.borderRadius = '50%';
-    ball.div.style.height = ball.radius + 'px';
-    ball.div.style.width = ball.radius + 'px';
-    ball.div.style.backgroundColor = getRandomColor();
-    // } while (run);
+    var again
+    // Regenerate until non-colliding is found!
+    do {
+      var ball = {};
+      ball.div = document.createElement('div');
+      ball.radius = randomNumber(MIN_SIZE, MAX_SIZE);
+      ball.x = randomNumber(ball.radius, WIDTH);
+      ball.y = randomNumber(ball.radius, HEIGHT);
+      // checkCollision on creation!
+      again = checkCollision(ball, 0, balls.length, -1);
+      ball.vx = randomNumber(.2, 1);
+      ball.vy = randomNumber(.2, 1);
+      // Randomize individual velocity!
+      ball.dx = randomNumber(1, 10) % 2 ? 1 : -1;
+      ball.dy = randomNumber(1, 10) % 2 ? 1 : -1;
+      // console.log(ball.dx);
+      ball.div.style.position = 'absolute';
+      ball.div.style.left = ball.x + 'px';
+      ball.div.style.top = ball.y + 'px';
+      ball.div.style.borderRadius = '50%';
+      ball.div.style.height = ball.radius + 'px';
+      ball.div.style.width = ball.radius + 'px';
+      ball.div.style.backgroundColor = getRandomColor();
+    } while (again);
     console.log(ball);
     return ball;
   }
@@ -106,11 +111,12 @@ function Ball(numberOfBalls) {
       // balls -> Array of balls
       // Start end -> To check
       // position of current ball in array!
+
       if (position != i) {
         // Doesn't check wit self 
         // -> Optimize to remove this check, limit while passing!
         if (obj.x <= (balls[i].x + balls[i].radius) && (obj.x + obj.radius) >= balls[i].x && obj.y <= (balls[i].y + balls[i].radius) && (obj.y + obj.radius) >= balls[i].y) {
-          console.log('collide');
+          console.log('collision!');
           return true;
         }
       }
@@ -125,14 +131,8 @@ function randomNumber(min, max) {
 }
 
 function getRandomColor() {
-  // return '#'.join(Math.floor(Math.random() * 16777215).toString(16));
-  var red = randomNumber(0, 255);
-  var blue = randomNumber(0, 255);
-  var green = randomNumber(0, 255);
-  var alpha = randomNumber(0.5, 1)
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-
+  return '#' + (Math.floor(Math.random() * 16777216).toString(16));
 }
 
-var ball = new Ball(10);
+var ball = new Ball(20);
 ball.init();
