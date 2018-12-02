@@ -1,9 +1,9 @@
 // circle  sizes!
-var MIN_SIZE = 30;
-var MAX_SIZE = 50;
+var MIN_SIZE = 35;
+var MAX_SIZE = 40;
 // Height width WITHOUT px!
 var WIDTH = 800;
-var HEIGHT = 800;
+var HEIGHT = 400;
 
 var container = document.getElementById('container');
 container.style.width = WIDTH + 'px';
@@ -83,8 +83,9 @@ function Ball(numberOfBalls) {
       var ball = {};
       ball.div = document.createElement('div');
       ball.radius = randomNumber(MIN_SIZE, MAX_SIZE);
-      ball.x = randomNumber(ball.radius, WIDTH);
-      ball.y = randomNumber(ball.radius, HEIGHT);
+      //  Avoid freezing balls on floor and right wall
+      ball.x = randomNumber(ball.radius, WIDTH - ball.radius);
+      ball.y = randomNumber(ball.radius, HEIGHT - ball.radius);
       // checkCollision on creation!
       again = checkCollision(ball, 0, balls.length, -1);
       ball.vx = randomNumber(.2, 1);
@@ -134,5 +135,5 @@ function getRandomColor() {
   return '#' + (Math.floor(Math.random() * 16777216).toString(16));
 }
 
-var ball = new Ball(20);
+var ball = new Ball(10);
 ball.init();
