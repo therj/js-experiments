@@ -33,7 +33,7 @@ function Ball(numberOfBalls) {
     if (isMoving) {
       clearInterval(ballInterval);
     } else {
-      ballInterval = setInterval(moveAllBalls, 5);
+      ballInterval = setInterval(moveAllBalls, 1);
     }
     isMoving = !isMoving
   }
@@ -89,11 +89,11 @@ function Ball(numberOfBalls) {
       ball.y = randomNumber(ball.radius, HEIGHT - ball.radius);
       // checkCollision on creation!
       again = checkCollision(ball, 0, balls.length, -1);
-      ball.vx = randomNumber(.1, 1);
-      ball.vy = randomNumber(.1, 1);
+      ball.vx = randomNumber(.4, 1);
+      ball.vy = randomNumber(.4, 1);
       // Randomize individual velocity!
-      ball.dx = randomNumber(1, 10) % 2 ? 1 : -1;
-      ball.dy = randomNumber(1, 10) % 2 ? 1 : -1;
+      ball.dx = randomNumber(-1, 1) < 0 ? -1 : 1;
+      ball.dy = randomNumber(-1, 1) < 0 ? -1 : 1;
       // console.log(ball.dx);
       ball.div.style.position = 'absolute';
       ball.div.style.left = ball.x + 'px';
