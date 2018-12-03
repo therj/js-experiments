@@ -57,7 +57,7 @@ function Ball(numberOfBalls) {
         break;
 
       default:
-        if (!checkCollision(balls[i], 0, balls.length - 1, i)) {
+        if (!checkCollision(balls[i], 0, balls.length, i)) {
           balls[i].div.style.left = balls[i].x + 'px';
           balls[i].div.style.top = balls[i].y + 'px';
         } else {
