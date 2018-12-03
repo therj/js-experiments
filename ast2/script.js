@@ -14,6 +14,7 @@ function Ball(numberOfBalls) {
   var container = document.getElementById('container');
   var ballInterval; //random!
   var isMoving = false //toggle the state on init!
+  // Allow users to pause motion in future!!
   _ = this //coz that's tooo longg!
 
   this.init = function () {
