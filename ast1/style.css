@@ -5,29 +5,32 @@ body {
 
 body {
   background: #424242;
+  /* background: #fff; */
 }
 
 #slider {
+  box-shadow: 0px 0px 50px 5px rgba(255, 255, 255, 0.2);
   position: relative;
-  width: 500px;
-  height: 384px;
+  width: 800px;
+  height: 400px;
   overflow: hidden;
   margin: auto;
   /* Center of the container*/
   top: 50%;
   transform: translateY(-50%);
+  border-radius: 8px;
 }
 
 #inner-slider {
   position: absolute;
-  height: 384px;
-  width: 2500px;
+  height: 400px;
+  width: 4000px;
   float: left;
 }
 
 img.slider-image {
   float: left;
-  width: 500px;
+  width: 800px;
   height: auto;
   margin: 0;
   padding: 0;
@@ -42,16 +45,16 @@ img.slider-image {
   bottom: 0;
   right: 0;
   width: 100%;
-  /* transform: translate(0%, 50%); */
-  /* OR margin top the 50% of image height! */
 
 }
 
 #arrow>div {
   background: #ffffffcc;
-  /* border: 2px solid red; */
   border-radius: 2px;
+}
 
+#arrow>div:hover {
+  cursor: pointer;
 }
 
 #arrow-left {
@@ -60,9 +63,6 @@ img.slider-image {
 
 #arrow-right {
   float: right;
-  /* position: absolute; */
-  /* top: 50%; */
-  /* margin-top: ; */
 }
 
 #arrow img {

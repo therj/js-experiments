@@ -1,19 +1,19 @@
+var imageContainer = document.getElementById('inner-slider');
 var IMAGE_CHANGE_INTERVAL = 2000; //in ms
-var PIXELS_TO_SLIDE = 10; //per 10ms
-var SLIDER_HEIGHT = '384px';
-var SLIDER_WIDTH = '500px';
+var IMAGE_COUNT = imageContainer.childElementCount;
+var PIXELS_TO_SLIDE = 20; //per 10ms
+var SLIDER_HEIGHT = '400px';
+var SLIDER_WIDTH = '800px';
 var PREVIOUS = 'a';
 var NEXT = 's';
 
-var imageContainer = document.getElementById('inner-slider');
 var arrowLeft = document.getElementById('arrow-left');
 var arrowRight = document.getElementById('arrow-right');
 arrowLeft.classList.add('hidden');
-var imageCount = 5;
 var slideIndex = 0;
 var directionFlag = 1; // 1 -> Left!
 imageContainer.style.left = 0;
-imageContainer.style.width = parseInt(SLIDER_WIDTH) * imageCount + 'px';
+imageContainer.style.width = parseInt(SLIDER_WIDTH) * IMAGE_COUNT + 'px';
 
 function changeImage() {
   slideSingleImage(directionFlag);
@@ -48,7 +48,7 @@ function previousImage() {
 function nextImage() {
   // console.log(slideIndex);
   // if NOT last
-  if (slideIndex < imageCount - 1) {
+  if (slideIndex < IMAGE_COUNT - 1) {
     slideIndex++;
     imageContainer.style.left =
       parseInt(imageContainer.style.left) - parseInt(SLIDER_WIDTH) + 'px';
@@ -74,8 +74,8 @@ function customMove(direction) {
 function setPosition() {
   arrowLeft.classList.remove('hidden');
   arrowRight.classList.remove('hidden');
-  if (slideIndex >= imageCount - 1) {
-    slideIndex = imageCount - 1;
+  if (slideIndex >= IMAGE_COUNT - 1) {
+    slideIndex = IMAGE_COUNT - 1;
     arrowRight.classList.add('hidden');
     directionFlag = -1;
   } else if (slideIndex <= 0) {
