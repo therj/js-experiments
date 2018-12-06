@@ -1,36 +1,92 @@
-imageContainer = document.getElementById('inner-slider')
-imageContainer.style.left = 0;
-var sliderWidth = '500px';
-var sliderHeight = '384px';
-var imageChangeInterval = 2000; //in ms
-var pixelsToSlide = 10; //per 10ms
-var imageCount = 5;
-imageContainer.style.width = sliderWidth * imageCount + 'px';
-var SlideCount = 0;
-var pixelsMoved = 0; //Internal variable, accessible to 2 functions, can't be passed!
+var IMAGE_CHANGE_INTERVAL = 2000; //in ms
+var PIXELS_TO_SLIDE = 10; //per 10ms
+var SLIDER_HEIGHT = '384px';
+var SLIDER_WIDTH = '500px';
+var PREVIOUS = 'a';
+var NEXT = 's';
 
+imageContainer = document.getElementById('inner-slider');
+var imageCount = 5;
+var slideIndex = 0;
+var directionFlag = 1; // 1 -> Left!
+imageContainer.style.left = 0;
+imageContainer.style.width = parseInt(SLIDER_WIDTH) * imageCount + 'px';
 
 function changeImage() {
-  if (SlideCount >= imageCount - 1) {
-    imageContainer.style.left = '0px';
-    SlideCount = 0;
-  }
-  console.log(SlideCount);
-  slideSingleImage()
-  SlideCount++;
+  slideSingleImage(directionFlag);
+  slideIndex += directionFlag;
+  setPosition()
 }
 
-function slideSingleImage() {
-  pixelsMoved = 0;
-  y = setInterval(() => {
-    imageContainer.style.left = parseInt(imageContainer.style.left) - pixelsToSlide + 'px';
-    pixelsMoved += pixelsToSlide
-    if (pixelsMoved >= parseInt(sliderWidth)) {
-      clearInterval(y)
+function slideSingleImage(directionFlag) {
+  var pixelsMoved = 0;
+  internalSlide = setInterval(() => {
+    // console.log('slideSingleImage!');
+    imageContainer.style.left =
+      parseInt(imageContainer.style.left) -
+      directionFlag * PIXELS_TO_SLIDE +
+      'px';
+    pixelsMoved += PIXELS_TO_SLIDE;
+    if (pixelsMoved >= parseInt(SLIDER_WIDTH)) {
+      clearInterval(internalSlide);
     }
   }, 10);
 }
 
-main = setInterval(() => {
-  changeImage()
-}, imageChangeInterval);
+
+
+function previousImage() {
+  // If slideIndex is not 0: LEFT!
+  if (slideIndex) {
+    imageContainer.style.left =
+      parseInt(imageContainer.style.left) + parseInt(SLIDER_WIDTH) + 'px';
+    slideIndex--;
+  }
+}
+
+function nextImage() {
+  // console.log(slideIndex);
+  // if NOT last
+  if (slideIndex < imageCount - 1) {
+    slideIndex++;
+    imageContainer.style.left =
+      parseInt(imageContainer.style.left) - parseInt(SLIDER_WIDTH) + 'px';
+  }
+}
+
+
+function customMove(direction) {
+  // No nothing without NEXT or PREVIOUS!
+  if (direction == PREVIOUS || direction == NEXT) {
+    clearInterval(main)
+    if ((direction == PREVIOUS)) {
+      previousImage()
+    } else { // else NEXT !
+      nextImage()
+    }
+    // FIX position!
+    setPosition()
+    main = setInterval(changeImage, IMAGE_CHANGE_INTERVAL);
+  }
+}
+
+function setPosition(params) {
+  if (slideIndex >= imageCount - 1) {
+    slideIndex = imageCount - 1;
+    directionFlag = -1;
+  } else if (slideIndex <= 0) {
+    slideIndex = 0;
+    directionFlag = 1;
+  }
+}
+
+document.addEventListener('keypress', function (e) {
+  customMove(e.key)
+});
+
+
+function start() {
+  main = setInterval(changeImage, IMAGE_CHANGE_INTERVAL);
+}
+
+start();
