@@ -1,11 +1,14 @@
 var IMAGE_CHANGE_INTERVAL = 2000; //in ms
-var PIXELS_TO_SLIDE = 10; //per 10ms
+var PIXELS_TO_SLIDE = 20; //per 10ms
 var SLIDER_HEIGHT = '384px';
 var SLIDER_WIDTH = '500px';
 var PREVIOUS = 'a';
 var NEXT = 's';
 
-imageContainer = document.getElementById('inner-slider');
+var imageContainer = document.getElementById('inner-slider');
+var arrowLeft = document.getElementsByClassName('arrow-left')[0];
+var arrowRight = document.getElementsByClassName('arrow-right')[0];
+arrowLeft.classList.add('hidden');
 var imageCount = 5;
 var slideIndex = 0;
 var directionFlag = 1; // 1 -> Left!
@@ -15,7 +18,7 @@ imageContainer.style.width = parseInt(SLIDER_WIDTH) * imageCount + 'px';
 function changeImage() {
   slideSingleImage(directionFlag);
   slideIndex += directionFlag;
-  setPosition()
+  setPosition();
 }
 
 function slideSingleImage(directionFlag) {
@@ -32,8 +35,6 @@ function slideSingleImage(directionFlag) {
     }
   }, 10);
 }
-
-
 
 function previousImage() {
   // If slideIndex is not 0: LEFT!
@@ -54,36 +55,45 @@ function nextImage() {
   }
 }
 
-
 function customMove(direction) {
   // No nothing without NEXT or PREVIOUS!
   if (direction == PREVIOUS || direction == NEXT) {
-    clearInterval(main)
-    if ((direction == PREVIOUS)) {
-      previousImage()
-    } else { // else NEXT !
-      nextImage()
+    clearInterval(main);
+    if (direction == PREVIOUS) {
+      previousImage();
+    } else {
+      // else NEXT !
+      nextImage();
     }
     // FIX position!
-    setPosition()
+    setPosition();
     main = setInterval(changeImage, IMAGE_CHANGE_INTERVAL);
   }
 }
 
 function setPosition(params) {
+  arrowLeft.classList.remove('hidden');
+  arrowRight.classList.remove('hidden');
   if (slideIndex >= imageCount - 1) {
     slideIndex = imageCount - 1;
+    arrowRight.classList.add('hidden');
     directionFlag = -1;
   } else if (slideIndex <= 0) {
+    arrowLeft.classList.add('hidden');
     slideIndex = 0;
     directionFlag = 1;
   }
 }
 
-document.addEventListener('keypress', function (e) {
-  customMove(e.key)
+document.addEventListener('keypress', function(e) {
+  customMove(e.key);
 });
-
+arrowLeft.addEventListener('click', function(e) {
+  customMove((direction = 'a'));
+});
+arrowRight.addEventListener('click', function(e) {
+  customMove((direction = 's'));
+});
 
 function start() {
   main = setInterval(changeImage, IMAGE_CHANGE_INTERVAL);
