@@ -1,8 +1,21 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #424242;
+}
+
 #slider {
   position: relative;
   width: 500px;
   height: 384px;
   overflow: hidden;
+  margin: auto;
+  /* Center of the container*/
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #inner-slider {
@@ -20,7 +33,7 @@ img.slider-image {
   padding: 0;
 }
 
-.arrow {
+#arrow {
   height: 50px;
   position: absolute;
   margin: auto;
@@ -34,25 +47,25 @@ img.slider-image {
 
 }
 
-.arrow>div {
+#arrow>div {
   background: #ffffffcc;
   /* border: 2px solid red; */
   border-radius: 2px;
 
 }
 
-.arrow-left {
+#arrow-left {
   float: left;
 }
 
-.arrow-right {
+#arrow-right {
   float: right;
   /* position: absolute; */
   /* top: 50%; */
   /* margin-top: ; */
 }
 
-.arrow img {
+#arrow img {
   height: 50px;
 }
 

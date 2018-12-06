@@ -1,13 +1,13 @@
 var IMAGE_CHANGE_INTERVAL = 2000; //in ms
-var PIXELS_TO_SLIDE = 20; //per 10ms
+var PIXELS_TO_SLIDE = 10; //per 10ms
 var SLIDER_HEIGHT = '384px';
 var SLIDER_WIDTH = '500px';
 var PREVIOUS = 'a';
 var NEXT = 's';
 
 var imageContainer = document.getElementById('inner-slider');
-var arrowLeft = document.getElementsByClassName('arrow-left')[0];
-var arrowRight = document.getElementsByClassName('arrow-right')[0];
+var arrowLeft = document.getElementById('arrow-left');
+var arrowRight = document.getElementById('arrow-right');
 arrowLeft.classList.add('hidden');
 var imageCount = 5;
 var slideIndex = 0;
@@ -56,7 +56,7 @@ function nextImage() {
 }
 
 function customMove(direction) {
-  // No nothing without NEXT or PREVIOUS!
+  // Do nothing without NEXT or PREVIOUS!
   if (direction == PREVIOUS || direction == NEXT) {
     clearInterval(main);
     if (direction == PREVIOUS) {
@@ -71,7 +71,7 @@ function customMove(direction) {
   }
 }
 
-function setPosition(params) {
+function setPosition() {
   arrowLeft.classList.remove('hidden');
   arrowRight.classList.remove('hidden');
   if (slideIndex >= imageCount - 1) {
@@ -86,13 +86,14 @@ function setPosition(params) {
 }
 
 document.addEventListener('keypress', function(e) {
+  // console.log(e.key);
   customMove(e.key);
 });
 arrowLeft.addEventListener('click', function(e) {
-  customMove((direction = 'a'));
+  customMove((direction = PREVIOUS));
 });
 arrowRight.addEventListener('click', function(e) {
-  customMove((direction = 's'));
+  customMove((direction = NEXT));
 });
 
 function start() {
